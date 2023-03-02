@@ -1,6 +1,9 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        r = 0
-        c = 0
+        for r in matrix:
+            if r[0] == target or r[-1] == target : return True
+            if r[0]< target < r[-1]:
+                for c in r:
+                    if c == target: return True
 
-        while r < len(matrix)
+        return False
