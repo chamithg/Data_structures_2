@@ -8,22 +8,23 @@ class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
         output = []
         if not root:return output
-        if root.val == targetSum and not root.left and not root.left:
-            output.append([root.val])
+        if not root.left and not root.right:
+            if root.val == targetSum:
+                output.append([root.val])
+                return output
 
-        def treverse(root,temp):
-            temp1 = temp[:]
-            print(sum(temp1))
-            if not root:
-                if sum(temp1)== targetSum and len(temp1) >1:
-                    if temp1 not in output:
-                        output.append(temp1)
-                return
+
+        def treverse(root,path,temp_sum):
+            temp = path[:]
+            temp.append(root.val)
+            temp_sum += root.val
+            if root.left:
+                treverse(root.left,temp,temp_sum)
+            if root.right:
+                treverse(root.right,temp,temp_sum)
+            if not root.left and not root.right and targetSum == temp_sum:
+                output.append(temp)
             
-            temp1.append(root.val)
-            print(temp)
-            treverse(root.left,temp1)
-            treverse(root.right,temp1)
         
-        treverse(root,[])
+        treverse(root,[],0)
         return output
